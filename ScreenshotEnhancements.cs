@@ -161,7 +161,7 @@ namespace ScreenshotEnhancements
 	[Label("Clientside Config")]
 	public class SHClientsideConfig : ModConfig
 	{
-		public override ConfigScope Mode => ConfigScope.ClientSide; // per player config
+		public override ConfigScope Mode => ConfigScope.ClientSide;
 
 		[Label("Invisible Player")]
 		[Tooltip("If true, the player will be fully invisible. True by default")]
