@@ -9,7 +9,6 @@ namespace ScreenshotEnhancements
 {
 	public class ScreenshotEnhancements : Mod
 	{
-		//TODO: HERO's mod support
 		//TODO: Projectile AI Freeze
 		//TODO: NPC AI Freeze
 		//TODO: Save and load data for invsPlayer bool
@@ -47,7 +46,7 @@ namespace ScreenshotEnhancements
 				else if (HEROsMod != null)
 				{
 					HEROsModLoaded = true;
-					//HEROsMod Button
+					HEROsModButton(HEROsMod);
 				}
 				else
 				{
@@ -63,6 +62,42 @@ namespace ScreenshotEnhancements
 			config_invsPlayer = false;
 		}
 
+		#region HERO's Mod
+		internal void HEROsModButton(Mod HEROsMod)
+		{
+			if (!Main.dedServ)
+			{
+				HEROsMod.Call(
+					"AddSimpleButton",
+					"ModifyTerrain",
+					Main.itemTexture[297],
+					(Action)HEROsModButton_Pressed,
+					(Action<bool>)HEROsModButton_PermissionChanged,
+					(Func<string>)HEROsModButton_Tooltip
+				);
+			}
+		}
+
+		internal string HEROsModButton_Tooltip()
+		{
+			return cheatSheet_invsPlayer ? "Make the player visibe" : "Make the player invisible";
+		}
+
+		internal void HEROsModButton_Pressed()
+		{
+			HEROsMod_invsPlayer = !HEROsMod_invsPlayer;
+		}
+
+		internal void HEROsModButton_PermissionChanged(bool hasPermission)
+		{
+			if (!hasPermission)
+			{
+				HEROsMod_invsPlayer = false;
+			}
+		}
+		#endregion
+
+		#region Cheat Sheet
 		internal void CheatSheetButton(Mod cheatSheet)
 		{
 			if (!Main.dedServ)
@@ -80,6 +115,7 @@ namespace ScreenshotEnhancements
 		{
 			cheatSheet_invsPlayer = !cheatSheet_invsPlayer;
 		}
+		#endregion
 	}
 
 	public class SHModPlayer : ModPlayer
@@ -122,8 +158,7 @@ namespace ScreenshotEnhancements
 	[Label("Clientside Config")]
 	public class SHClientsideConfig : ModConfig
 	{
-		public override ConfigScope Mode
-			=> ConfigScope.ClientSide; // per player config
+		public override ConfigScope Mode => ConfigScope.ClientSide; // per player config
 
 		[Label("Invisible Player")]
 		[Tooltip("If true, the player will be fully invisible. True by default")]
