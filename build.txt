@@ -1,4 +1,4 @@
 displayName = Screenshot Enhancements
 author = GoodPro712
-version = 0.1
+version = 0.1.0.1
 weakReferences = CheatSheet@0.6.2.1

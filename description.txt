@@ -9,3 +9,5 @@ The homepage of this mod is a Discord invite because there is no need for a foru
 For support, visit the Discord. If you can't get to DIscord, create an issue on github.
 
 Github Link: https://github.com/GoodPro712/ScreenshotEnhancements
+
+Thanks Zando for the icon sprite.
