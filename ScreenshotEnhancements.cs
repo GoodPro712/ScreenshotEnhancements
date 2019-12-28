@@ -11,7 +11,6 @@ namespace ScreenshotEnhancements
 	{
 		//TODO: Projectile AI Freeze
 		//TODO: NPC AI Freeze
-		//TODO: Save and load data for invsPlayer bool
 
 		public ScreenshotEnhancements()
 		{
@@ -63,6 +62,7 @@ namespace ScreenshotEnhancements
 		}
 
 		#region HERO's Mod
+
 		internal void HEROsModButton(Mod HEROsMod)
 		{
 			if (!Main.dedServ)
@@ -95,9 +95,11 @@ namespace ScreenshotEnhancements
 				HEROsMod_invsPlayer = false;
 			}
 		}
-		#endregion
+
+		#endregion HERO's Mod
 
 		#region Cheat Sheet
+
 		internal void CheatSheetButton(Mod cheatSheet)
 		{
 			if (!Main.dedServ)
@@ -115,7 +117,8 @@ namespace ScreenshotEnhancements
 		{
 			cheatSheet_invsPlayer = !cheatSheet_invsPlayer;
 		}
-		#endregion
+
+		#endregion Cheat Sheet
 	}
 
 	public class SHModPlayer : ModPlayer
