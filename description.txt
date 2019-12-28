@@ -1,1 +1,11 @@
-Screenshot Enhancements is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+If Cheat Sheet is enabled, this mod will create a button for Cheat Sheet to turn the player invisibled when pressed.
+If HERO's Mod is enabled and Cheat Sheet isn't enabled, this mod will create a button for HERO's Mod to turn the player invisibled when pressed.
+If HERO's Mod and Cheat Sheet are not enabled, this mod will rely on this mod's config to turn the player invisibled.
+
+
+This mod was a requested by Batby, and made by GoodPro712.
+
+The homepage of this mod is a Discord invite because there is no need for a forum, everything is explained here.
+For support, visit the Discord. If you can't get to DIscord, create an issue on github.
+
+Github Link: https://github.com/GoodPro712/ScreenshotEnhancements

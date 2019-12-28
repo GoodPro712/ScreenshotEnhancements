@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +9,8 @@ namespace ScreenshotEnhancements
 {
 	public class ScreenshotEnhancements : Mod
 	{
+		//TODO: HERO's mod support
+		//TODO: Projectile AI Freeze
 		//TODO: NPC AI Freeze
 		//TODO: Save and load data for invsPlayer bool
 
@@ -17,13 +18,21 @@ namespace ScreenshotEnhancements
 		{
 		}
 
-		internal bool invsPlayer = false;
+		internal bool cheatSheet_invsPlayer = false;
+		internal bool HEROsMod_invsPlayer = false;
+		internal bool config_invsPlayer = false;
 
 		internal Mod cheatSheet;
+		internal Mod HEROsMod;
+
+		public bool CheatSheetLoaded = false;
+		internal bool HEROsModLoaded = false;
+		internal bool useConfig = false;
 
 		public override void Load()
 		{
 			cheatSheet = ModLoader.GetMod("CheatSheet");
+			HEROsMod = ModLoader.GetMod("HEROsMod");
 		}
 
 		public override void PostSetupContent()
@@ -32,15 +41,26 @@ namespace ScreenshotEnhancements
 			{
 				if (cheatSheet != null)
 				{
-					//cheatSheet.Call("AddButton_Test", GetTexture("Item_297"), invsPlayer = !invsPlayer, invsPlayer ? "Make the player visibe" : "Make the player invisible");
+					CheatSheetLoaded = true;
 					CheatSheetButton(cheatSheet);
+				}
+				else if (HEROsMod != null)
+				{
+					HEROsModLoaded = true;
+					//HEROsMod Button
+				}
+				else
+				{
+					useConfig = true;
 				}
 			}
 			catch (Exception e)
 			{
 				Logger.Warn($"Screenshot Enhancements PostSetupContent Error: {e.StackTrace} {e.Message}");
 			}
-			invsPlayer = false;
+			cheatSheet_invsPlayer = false;
+			HEROsMod_invsPlayer = false;
+			config_invsPlayer = false;
 		}
 
 		internal void CheatSheetButton(Mod cheatSheet)
@@ -53,12 +73,12 @@ namespace ScreenshotEnhancements
 
 		internal string CheatSheetButton_Tooltip()
 		{
-			return invsPlayer ? "Make the player visibe" : "Make the player invisible";
+			return cheatSheet_invsPlayer ? "Make the player visibe" : "Make the player invisible";
 		}
 
 		internal void CheatSheetButton_Pressed()
 		{
-			invsPlayer = !invsPlayer;
+			cheatSheet_invsPlayer = !cheatSheet_invsPlayer;
 		}
 	}
 
@@ -66,16 +86,34 @@ namespace ScreenshotEnhancements
 	{
 		public override void ModifyDrawLayers(List<PlayerLayer> layers)
 		{
-			bool config = false;
-			if (ModContent.GetInstance<ScreenshotEnhancements>().cheatSheet == null)
+			if (ModContent.GetInstance<ScreenshotEnhancements>().CheatSheetLoaded)
 			{
-				config = true;
-			}
-			if (ModContent.GetInstance<ScreenshotEnhancements>().invsPlayer || config)
-			{
-				foreach (PlayerLayer layer in layers)
+				if (ModContent.GetInstance<ScreenshotEnhancements>().cheatSheet_invsPlayer)
 				{
-					layer.visible = false;
+					foreach (PlayerLayer layer in layers)
+					{
+						layer.visible = false;
+					}
+				}
+			}
+			else if (ModContent.GetInstance<ScreenshotEnhancements>().HEROsModLoaded)
+			{
+				if (ModContent.GetInstance<ScreenshotEnhancements>().HEROsMod_invsPlayer)
+				{
+					foreach (PlayerLayer layer in layers)
+					{
+						layer.visible = false;
+					}
+				}
+			}
+			else if (ModContent.GetInstance<ScreenshotEnhancements>().useConfig)
+			{
+				if (ModContent.GetInstance<ScreenshotEnhancements>().config_invsPlayer)
+				{
+					foreach (PlayerLayer layer in layers)
+					{
+						layer.visible = false;
+					}
 				}
 			}
 		}
@@ -86,9 +124,6 @@ namespace ScreenshotEnhancements
 	{
 		public override ConfigScope Mode
 			=> ConfigScope.ClientSide; // per player config
-
-
-		[Header("Player")]
 
 		[Label("Invisible Player")]
 		[Tooltip("If true, the player will be fully invisible. True by default")]
