@@ -23,7 +23,7 @@ namespace ScreenshotEnhancements
 		internal Mod cheatSheet;
 		internal Mod HEROsMod;
 
-		public bool CheatSheetLoaded = false;
+		internal bool CheatSheetLoaded = false;
 		internal bool HEROsModLoaded = false;
 		internal bool useConfig = false;
 
